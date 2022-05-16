@@ -13,7 +13,7 @@ function maps() {
         right_map(this.responseText);
     }
     right.overrideMimeType("text/html");
-    right.open('GET', '../../section.map');
+    right.open('GET', '../../section.map.txt');
     right.send();
     
     // Get the chapter map
