@@ -147,6 +147,7 @@ function maps() {
     function chapter_to_url(text) {
         // Only for the chapter title, e.g. "Functions and Limits"
         text = text.toLowerCase();
+        text = text.trim();
         text = text.replace(/\s/g, '_');
         text = text.replace(/,/g, '');
         text = text.replace(/&/g, 'and');
@@ -160,11 +161,13 @@ function maps() {
     function title_to_url(text, section) {
         // Convert a heading like "Functions as Graphs" to a url e.g. '../functions_as_graphs/index.html'
         text = text.toLowerCase();
+        text = text.trim();
         text = text.replace(/\s/g, '_');
         text = text.replace(/,/g, '');
         text = text.replace(/&/g, 'and');
 
         section = section.toLowerCase();
+        section = section.trim();
         section = section.replace(/\s/g, '_');
         section = section.replace(/,/g, '');
         section = section.replace(/&/g, 'and');
@@ -179,8 +182,7 @@ function maps() {
 
     function parse_map (text) {
         // Chop the text into an array of string arrays
-        console.log(text);
-        var lines = text.split('\r\n');
+        var lines = text.split('\n');
         var index = -1;
         var outer = 0;
         var inner = 0;
