@@ -179,6 +179,7 @@ function maps() {
 
     function parse_map (text) {
         // Chop the text into an array of string arrays
+        console.log(text);
         var lines = text.split('\r\n');
         var index = -1;
         var outer = 0;
