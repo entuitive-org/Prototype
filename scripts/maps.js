@@ -12,8 +12,8 @@ function maps() {
     right.onload = function() {
         right_map(this.responseText);
     }
-    right.overrideMimeType("text/html");
-    right.open('GET', '../../section.map.txt');
+    right.overrideMimeType("text");
+    right.open('GET', '../../section.map');
     right.send();
     
     // Get the chapter map
@@ -21,7 +21,7 @@ function maps() {
     left.onload = function() {
         left_map(this.responseText);
     }
-    left.overrideMimeType("text/html");
+    left.overrideMimeType("text");
     left.open('GET', '../../../chapter.map');
     left.send();
     
