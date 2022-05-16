@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>
+            Calculus: Functions and Limits
+        </title>
+        <link rel="stylesheet" href="../../../scripts/style.css">
+
+        <script src="../../../scripts/maps.js"></script>
+
+        <script src="../../../scripts/graph.js"></script>
+        <script src="fg_intro.js"></script>
+        <script src="fa_left.js"></script>
+        <script src="fa_right.js"></script>
+        <script src="fa_multiple.js"></script>
+
+        <!-- MathJax allows LaTeX formatting in-page -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+    </head>
+
+    <body>
+        <header>
+            Banner
+        </header>
+        <div class="grid-container">
+            <!-- 
+                Left side navigation lists out the courses and chapters
+                this is filled by maps.js
+             -->
+            <div id="left-nav">
+            </div>
+            <!-- 
+                Right side navigation lists sections and subsections
+                this is filled by maps.js
+             -->
+             <div id="right-nav">
+             </div>
+            
+            <!-- 
+                Actual content is in main
+            -->
+            <main>
+                <h1 id="title">
+                    Functions as Graphs
+                </h1>
+
+                <div class="exposition">
+                    <p>
+                        Graphs are among the most powerful tools we have in mathematics. 
+                        We can use them to represent functions, either from formulas or directly.
+                        We'll cover formulas in the next section.
+                    </p>
+                    <p>
+                        Most often, the independent variable (usually \(x\)) is draw on the horizontal axis, and the dependent variable (usually \(y\)) on the vertical axis.
+                    </p>
+                </div>
+
+                <div class="example-fixed">
+                    <div class="grid-split">
+                        <div class="grid-left">
+                            <canvas class="graph" id="fg_intro">
+                                Canvas don't work on your computer.
+                            </canvas>
+                        </div>
+                        <div class="grid-right">
+                            <p>
+                                This graph of the line \( y = \frac{1}{2} x + 1 \) has a domain and range of all real numbers, \( \mathbb{R} \), or \( ( -\infty, \infty ) \).
+                            </p>
+                            <p>
+                                An arrowhead at the end of a line indicates that it continues indefinitely in that direction. 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exposition">
+                    <p>
+                        To get the function value for a certain input, you can draw (or imagine) a vertical line at that point.
+                        The height of the graph at that point, \(a\), is your function value, \( f(a) \).
+                    </p>
+                    <p>
+                        If the line intersects at more than one place, then the graph does NOT represent a function. This is known as the <em>vertical line test</em>.
+                    </p>
+                </div>
+
+                <div class="example">
+                    <div class="grid-split">
+                        <div class="grid-left">
+                            <canvas class="graph" id="fa_left">
+
+                            </canvas>
+                            <p class="caption" id="fa_left_caption">
+                                \( f(a) = b \)
+                            </p>
+                        </div>
+                        <div class="grid-right">
+                            <canvas class="graph" id="fa_right">
+
+                            </canvas>
+                            <p class="caption" id="fa_right_caption">
+                                \( f(a) = b \)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exposition">
+                    <p>
+                        As with a table, a single graph can include multiple function plots.
+                        You can treat each graph as being separate from the others, but sometimes it is helpful to visualize them together.
+                    </p>
+                </div>
+
+                <div class="example">
+                    <div class="grid-21">
+                        <div class="grid-left">
+                            <canvas class="graph" id="fa_multiple">
+
+                            </canvas>
+                        </div>
+                        <div class="grid-right">
+                            <p id="fa_multiple_f" style="color:var(--base);">
+                                \( f(a) = b \)
+                            </p>
+                            <p id="fa_multiple_g" style="color:var(--second);">
+                                \( g(a) = c \)
+                            </p>
+                            <p id="fa_multiple_h" style="color:var(--third);">
+                                \( h(a) = d \)
+                            </p>    
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+
+
+                <!-- Next bar is also filled by maps.js -->
+                <div id="next">
+                </div>
+            </main>
+        </div>
+    </body>
+</html>

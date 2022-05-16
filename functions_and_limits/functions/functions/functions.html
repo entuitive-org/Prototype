@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>
+            Calculus: Functions and Limits
+        </title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="functions.css">
+
+        <script src="functions.js"></script>
+
+        <!-- MathJax allows LaTeX formatting in-page -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+    </head>
+    <body>
+        <header>
+            Banner
+        </header>
+        <div class="grid-container">
+            <!-- 
+                Left side navigation lists out the courses and chapters
+             -->
+            <div class="left-nav">
+                <ul class="nav">
+                    <li>
+                        <a href="#">
+                            Calculus
+                        </a>
+                    </li>
+                    <li>
+                        <ul class="nav">
+                            <li>
+                                <a href="#">
+                                    Functions & Limits
+                                </a>
+                            </li>
+                            <li>
+                                <ul class="nav">
+                                    <li>
+                                        <a href="#">
+                                            Functions
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            Exponential Functions
+                                        </a>
+                                    </li>
+                                    <li>
+                                        ...
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- 
+                Right side navigation lists sections and subsections
+             -->
+             <div class="right-nav">
+                 <ul class="nav">
+                    <li>
+                        <a href="#">
+                            Functions
+                        </a>
+                    </li>
+                    <ul class="nav">
+                        <li>
+                            <a href="#">
+                                Functions
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Functions as Tables
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Functions as Graphs
+                            </a>
+                        </li>
+                        <li>
+                            etc.
+                        </li>
+                    </ul>
+                    <li>
+                        <a href="#">
+                            Domain & Range
+                        </a>
+                    </li>
+                 </ul>
+             </div>
+            
+            <!-- 
+                Actual content is in main
+            -->
+            <main>
+                <h1>
+                    Functions
+                </h1>
+                <div class="example" id="introduction">
+                    <h3>
+                        Introduction: Functions
+                    </h3>
+
+                    <div id="intro-grid">
+                        <div class="title" id="intro-in-title">
+                            <h4>
+                                IN
+                            </h4>
+                        </div>
+                        <div class="title" id="intro-out-title">
+                            <h4>
+                                OUT
+                            </h4>
+                        </div>
+                        <div id="intro-box1">
+                            <button id="i1" onmousedown="intro_pressed(1)">
+                                Apple
+                            </button>
+                        </div>
+                        <div id="intro-box2">
+                            <button id="i2" onmousedown="intro_pressed(2)">
+                                7
+                            </button>
+                        </div>
+                        <div id="intro-box3">
+                            <button id="i3" onmousedown="intro_pressed(3)">
+                                Y
+                            </button>
+                        </div>
+                        <div id="intro-box4">
+                            <button id="i4" onmousedown="intro_pressed(4)">
+                                Red
+                            </button>
+                        </div>
+                        <div id="intro-output">
+                            <p class="output" id="intro-out">
+                                <br>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p>
+                        <em>
+                            Try pressing any of the buttons above.
+                        </em>
+                        <br><br>
+                        This <em>function</em> has four possible inputs: {Apple, 7, Y, Red}, called the <em>domain</em>. 
+                        It has four possible outputs: {Banana, 8, Z, Green}, called the <em>range</em>. 
+                    <br><br>
+                        Each input will always result in the same output. Otherwise, it would not be a <em>function</em>.
+                    </p>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>

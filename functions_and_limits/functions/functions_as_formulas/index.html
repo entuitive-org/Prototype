@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>
+            Calculus: Functions and Limits
+        </title>
+        <link rel="stylesheet" href="../../../scripts/style.css">
+
+        <script src="../../../scripts/maps.js"></script>
+        <script src="../../../scripts/graph.js"></script>
+
+        <!-- <script src="../../../scripts/graph.js"></script> -->
+        
+        <!-- MathJax allows LaTeX formatting in-page -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+        <!-- 
+            Page-specific scripts
+         -->
+         <script src="faf1.js"></script>
+         <script src="faf2.js"></script>
+        
+    </head>
+
+    <body>
+        <header>
+            Banner
+        </header>
+        <div class="grid-container">
+            <!-- 
+                Left side navigation lists out the courses and chapters
+                this is filled by maps.js
+             -->
+            <div id="left-nav">
+            </div>
+            <!-- 
+                Right side navigation lists sections and subsections
+                this is filled by maps.js
+             -->
+             <div id="right-nav">
+             </div>
+            
+            <!-- 
+                Actual content is in main
+            -->
+            <main>
+                <h1 id="title">
+                    Functions as Formulas
+                </h1>
+
+                <div class="exposition">
+                    <p>
+                        We often see functions expressed as formulas.
+                        The function can be evaluated, e.g. \(f(a)\) for some number \(a\), by simply replacing the function's variable, everywhere it appears, with that number.
+                    </p>
+                </div>
+
+                <!-- <div class="example-fixed">
+                    
+                </div> -->
+
+                
+                <div class="example">
+                    <div class="grid-split">
+                        <div class="grid-left">
+                            <div class="equation">
+                                <div class="equation-left">
+                                    <span>
+                                        Say \(f(x) = \)
+                                    </span>
+                                    <br>
+                                    <br>
+                                    <span>
+                                        Then \(f( \)
+                                            <input value="3" maxlength="3" autocomplete="off" oninput="faf1(value); MathJax.typeset()">
+                                            \( ) = \)
+                                    </span>
+                                    <br>
+                                    <span>
+                                        \( = \)
+                                    </span>
+                                    <br>
+                                    <span>
+                                        \( = \)
+                                    </span>
+                                </div>
+                                <div class="equation-right">
+                                    <span>
+                                        \( 2 x - 1 \)
+                                    </span>
+                                    <br>
+                                    <br>
+                                    <span id="faf1-line1">
+                                        \( 2 \times 3 - 1 \)
+                                    </span>
+                                    <br>
+                                    <span id="faf1-line2">
+                                        \( 6 - 1 \)
+                                    </span>
+                                    <br>
+                                    <span id="faf1-line3">
+                                        \( 5 \)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-right">
+                            <p>
+                                Here, our variable is \(x\) and our function is
+                            <br><br>
+                                \(
+                                    f(x) = 2x-1 
+                                \)
+                            <br><br>
+                                To evaluate the function for any value, replace \(x\) with that value and do the arithmetic.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exposition">
+                    <p>
+                        Our traditional independent variable is \(x\), though it could just as easily be \(a\) or \(t\) or anything else. Whatever the name of the variable, the idea is the same.
+                    </p>
+                </div>
+
+                <div class="example">
+                    <div class="grid-split">
+                        <div class="grid-left">
+                            <p>
+                                In this case, the formula includes many more instances of the variable \(t\).
+                                <br><br>
+                                Just as before, to evaluate the function for a particular value we insert that value in place of each instance of the variable \(t\)
+                            </p>
+                        </div>
+                        <div class="grid-right">
+                            <div class="equation">
+                                <div class="equation-left">
+                                    <span>
+                                        \( h(t) = \)
+                                    </span>
+                                    <br><br>
+                                    <span>
+                                        \(
+                                            h( \)
+                                            <input value="1" maxlength="3" autocomplete="off" oninput="faf2(value); MathJax.typeset()">
+                                            \() =
+                                        \)
+                                    </span>
+                                    <br>
+                                    <span>
+                                        \(=\)
+                                    </span>
+                                    <br>
+                                    <span>
+                                        \(=\)
+                                    </span>
+                                    <br>
+                                    <span id="faf2-lasteq">
+                                        \(=\)
+                                    </span>
+                                </div>
+                                <div class="equation-right">
+                                    <span>
+                                        \( 
+                                            \frac{ t^3 - 4 t^2 + 7 }{ t^2 + 1 }
+                                        \)
+                                    </span>
+                                    <br>
+                                    <br>
+                                    <span id="faf2-line1">
+                                        \(
+                                            \frac{ 1^3 - 4 \times 1^2 + 7 }{ 1^2 + 1 }
+                                        \)
+                                    </span>
+                                    <br>
+                                    <span id="faf2-line2">
+                                        \(
+                                            \frac{ 1 - 4 + 7 }{ 1 + 1 }
+                                        \)
+                                    </span>
+                                    <br>
+                                    <span id="faf2-line3">
+                                        \(
+                                            \frac{ 4 }{ 2 }
+                                        \)
+                                    </span>
+                                    <br>
+                                    <span id="faf2-line4">
+                                        \( 2 \)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exposition">
+                    <p>
+                        Functions presented as formulas lend themselves well to graphing.
+                        Just as the formula can be evaluated at a value by substituting that value into the formula, these input and output values give us points on a graph.
+                    </p>
+                    <p>
+                        Even if the shape is not obvious, we can evaluate a series of points in the form \((input, output)\) and plot these.
+                    </p>
+                </div>
+                <div class="example">
+
+                </div>
+
+
+                <!-- Next bar is also filled by maps.js -->
+                <div id="next">
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
