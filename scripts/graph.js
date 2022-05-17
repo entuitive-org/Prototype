@@ -65,6 +65,7 @@ class Graph {
         this.labelAxes();
 
         this.funcs = [];
+        this.points = [];
         this.interact = null;
     }
 
@@ -72,18 +73,25 @@ class Graph {
         // Clear and redraw the graph
         let ctx = this.ctx;
         ctx.clearRect(-this.canvas.width, -this.canvas.height, this.canvas.width*2, this.canvas.height*2);
-        this.interact.draw();
+        if (this.interact) this.interact.draw();
         this.drawAxes();
         this.labelAxes();
         for (let func of this.funcs) {
             func.draw();
         }
+        for (let pt of this.points) {
+            pt.draw();
+        }
     }
 
-    getColor() {
+    getColor(which=null) {
         // Set color based on order in which the functions are added
         let color = '';
-        switch (this.funcs.length) {
+        if (which === null) which = this.funcs.length;
+        switch (which) {
+            case -1:
+                color = Graph.colors.complement;
+                break;
             case 0:
                 color = Graph.colors.base;
                 break;
@@ -125,7 +133,22 @@ class Graph {
             graph.interact.updatePosition(pos.x, pos.y);
         }
     }
+
+    addInteractiveDrawing() {
+        // Draw the function one point at a time from values sent in by another script
+    }
     
+    addPoint(x, y, active=0, inactive=0) {
+        let pt = new Point(this, x, y, this.getColor(active), this.getColor(inactive));
+        if (this.points.length > 0) {
+            this.points[this.points.length-1].setInactive();
+            this.points[this.points.length-1].draw();
+            // this.points = []; // Added to save memory, but maybe it's not necessary
+        }
+        this.points.push(pt);
+        pt.draw();
+    }
+
     addLine(params={m: 0, b: 1}, label=null) {
         // Receives parameters as either {m,b} or {a,b}
         let line = null;
@@ -454,6 +477,32 @@ class Graph {
         let x = pt[0] * cos - pt[1] * sin;
         let y = pt[0] * sin + pt[1] * cos;
         return [x,y];
+    }
+}
+
+class Point {
+    constructor(graph, x, y, active="#000", inactive="#000") {
+        this.graph = graph;
+        this.x = x;
+        this.y = y;
+        this.active = active;
+        this.inactive = inactive;
+        this.color = active;
+    }
+
+    setActive() {
+        this.color = this.active;
+    }
+
+    setInactive() {
+        this.color = this.inactive;
+    }
+
+    draw() {
+        this.graph.ctx.strokeStyle = this.color;
+        this.graph.ctx.fillStyle = this.color;
+
+        this.graph.drawPoint(this.x, this.y);
     }
 }
 

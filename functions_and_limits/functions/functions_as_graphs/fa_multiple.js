@@ -15,7 +15,7 @@ function fa_multiple_setup() {
     ginv = function(x,y) {return x > 0?  Math.sqrt(2*y) : -1 * Math.sqrt(2*y)};
 
     graph.addFunction(f, finv, {on: true, text:'y=f(x)', x:-1.5});
-    graph.addFunction(g, null, {on: true, text:'y=g(x)', x:-1.5});
+    graph.addFunction(g, ginv, {on: true, text:'y=g(x)', x:-1.5});
     graph.addFunction(h, hinv, {on: true, text:'y=h(x)', x:-1.5});
 
     graph.addInteractiveFunctionHeight(updateF);

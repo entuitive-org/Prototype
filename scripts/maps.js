@@ -88,8 +88,8 @@ function maps() {
             html += '<li>';
             switch (typeof(map[line])) {
                 case 'string':
-                    section = map[line];
-                    if (map[line] == current) {
+                    section = map[line].trim();;
+                    if (map[line].trim() == current) {
                         chapter = section;
                         next = '#'; // Trigger for setting actual next
                         html += map[line];
@@ -109,7 +109,7 @@ function maps() {
                     html += '<ul class="nav">';
                     for (sub in map[line]) {
                         // html += '<li>';
-                        if (map[line][sub] == current) {
+                        if (map[line][sub].trim() == current) {
                             chapter = section;
                             next = '#' // Trigger etc.
                             html += '<li>';

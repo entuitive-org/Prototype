@@ -21,6 +21,7 @@
          -->
          <script src="faf1.js"></script>
          <script src="faf2.js"></script>
+         <script src="faf_draw.js"></script>
         
     </head>
 
@@ -74,7 +75,7 @@
                                     <br>
                                     <span>
                                         Then \(f( \)
-                                            <input value="3" maxlength="3" autocomplete="off" oninput="faf1(value); MathJax.typeset()">
+                                            <input value="3" maxlength="5" autocomplete="off" oninput="faf1(value)">
                                             \( ) = \)
                                     </span>
                                     <br>
@@ -110,10 +111,11 @@
                             <p>
                                 Here, our variable is \(x\) and our function is
                             <br><br>
+                            <span style="display: block; text-align:center">
                                 \(
                                     f(x) = 2x-1 
                                 \)
-                            <br><br>
+                            </span><br>
                                 To evaluate the function for any value, replace \(x\) with that value and do the arithmetic.
                             </p>
                         </div>
@@ -145,7 +147,7 @@
                                     <span>
                                         \(
                                             h( \)
-                                            <input value="1" maxlength="3" autocomplete="off" oninput="faf2(value); MathJax.typeset()">
+                                            <input value="1" maxlength="5" autocomplete="off" oninput="faf2(value)">
                                             \() =
                                         \)
                                     </span>
@@ -207,7 +209,69 @@
                     </p>
                 </div>
                 <div class="example">
+                    <div class="grid-split">
+                        <div class="grid-left">
+                            <p>
+                                Given the function
+                            <br><br>
+                            <span style="display: block; text-align:center">
+                                \( g(x) = \frac{x^3}{3} - 3 x \)
+                            </span>
+                            <br>
+                                We can find the outputs for various inputs
+                            </p>
 
+                            <div class="equation">
+                                <div class="equation-left">
+                                    <span>
+                                        \( g ( \)
+                                        <input value="1" maxlength="5" autocomplete="off" oninput="faf_calc(value)">
+                                        \( ) = \)
+                                    </span>
+                                    <br>
+                                    <span>
+                                        \(=\)
+                                    </span>
+                                    <br>
+                                    <span id="fafd-lasteq">
+                                        \(=\)
+                                    </span>
+                                </div>
+                                <div class="equation-right" id="fafd-eq">
+                                    <span id="fafd-line1">
+                                        \(
+                                            \frac{ 1^3 }{ 3 } - 3 \times 1
+                                        \)
+                                    </span>
+                                    <br>
+                                    <span id="fafd-line2">
+                                        \(
+                                            \frac{1}{3} - 3
+                                        \)
+                                    </span>
+                                    <br>
+                                    <span id="fafd-line3">
+                                        \(
+                                            - \frac{2}{3}
+                                        \)
+                                    </span>
+                                </div>
+                            </div>
+                            <p>
+                                We can plot this point, 
+                                <span id="faf-point">
+                                    \( 
+                                        (1, -\frac{2}{3} )
+                                    \)
+                                </span>, to get an idea of what the graph looks like.
+                            </p>
+                        </div>
+                        <div class="grid-right">
+                            <canvas class="graph" id="faf_draw">
+                                Canvas don't work so good.
+                            </canvas>
+                        </div>
+                    </div>
                 </div>
 
 
