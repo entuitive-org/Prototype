@@ -8,22 +8,18 @@ function maps() {
     var section = '';
     
     // Get the section map
-    var right = new XMLHttpRequest();
-    right.onload = function() {
-        right_map(this.responseText);
-    }
-    right.overrideMimeType("text");
-    right.open('GET', '../../section.map');
-    right.send();
+    fetch('../../section.map')
+        .then(response => response.text())
+        .then((data) => {
+            right_map(data)
+        })
     
     // Get the chapter map
-    var left = new XMLHttpRequest();
-    left.onload = function() {
-        left_map(this.responseText);
-    }
-    left.overrideMimeType("text");
-    left.open('GET', '../../../chapter.map');
-    left.send();
+    fetch('../../../chapter.map')
+        .then(response => response.text())
+        .then((data) => {
+            left_map(data);
+        })
     
     function right_map (text) {
         // Fill out the right-side navigation HTML

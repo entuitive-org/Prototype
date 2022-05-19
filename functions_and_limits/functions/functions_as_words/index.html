@@ -15,6 +15,11 @@
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
         <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         
+        <!-- 
+            Scripts
+         -->
+         <script src="faw1.js"></script>
+
     </head>
 
     <body>
@@ -45,11 +50,16 @@
 
                 <div class="exposition">
                     <p>
-                        The bane of every undergraduate math student's existence: word problems.
+                        When presented as words, functions are more difficult to parse but also give context as to what is represented.
                     </p>
-                    <p>
-                        
-                    </p>
+                    <!-- <p>
+                        For example, if \(h(t)\) represents the height of a ball above the ground, in meters, as a function of time in seconds, then \( h(2) = 3 \) means that, after \(2\) seconds, the ball is \(3\) meters above the ground.
+                    </p> -->
+
+
+                        <!-- Functions, when presented as words, are best transmuted into some other form. 
+                        Some lend themselves well to formulas, others to tables or graphs. -->
+                    
                 </div>
 
                 <div class="example-fixed">
@@ -58,7 +68,26 @@
 
                 
                 <div class="example">
-                
+                    <p>
+                        Let \( h(t) \) represent the height of a ball above the ground, in meters, as a function of time, in seconds, after it has been thrown.
+                        Then
+                    </p>
+                    <p style="text-align: center">
+                        \(
+                            h( \)
+                            <input value="2" maxlength="3" autocomplete="off" oninput="faw1a(value)">
+                                \( ) =  \)
+                            <input value="3" maxlength="3" autocomplete="off" oninput="faw1b(value)">
+                    </p>
+                    <p>
+                        means that,
+                        <span id="faw1a">
+                            \( 2 \) seconds after the ball is thrown,
+                        </span>
+                        <span id="faw1b">
+                            the ball is \( 3 \) meters above the ground.
+                        </span>
+                    </p>
                 </div>
 
                 
