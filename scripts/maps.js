@@ -1,3 +1,23 @@
+/*
+
+This code generates the left and right side navigation on pages from section.map and chapter.map,
+as well as the "Next: ..." link at the bottom of the page.
+
+The page just needs the following code:
+
+<div id="left-nav">
+</div>
+
+<div id="right-nav">
+</div>
+
+<div id="next">
+</div>
+
+and this script will populate them automatically
+
+*/
+
 window.addEventListener("load", maps, true);
 
 function maps() {

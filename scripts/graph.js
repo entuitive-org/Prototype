@@ -1,3 +1,16 @@
+/*
+
+Graphing utility for drawing functions, lines, points, etc.
+
+Create an instance of Graph by feeding it a canvas, i.e.
+
+let graph = new Graph(canvas);
+
+wtih optional parameters xlim, ylim, each in the form [min,max] (i.e. an array with two elements)
+and optional paramters for the ind and dep variable names, default "x" and "y"
+
+*/
+
 class Graph {
     static width = 1024;
     static height = 1024;
