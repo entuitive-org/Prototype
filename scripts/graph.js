@@ -80,6 +80,9 @@ class Graph {
         this.funcs = [];
         this.points = [];
         this.interact = null;
+
+        // Parameter to set function drawing on/off
+        this.drawFunctions = true;
     }
 
     redraw() {
@@ -89,8 +92,10 @@ class Graph {
         if (this.interact) this.interact.draw();
         this.drawAxes();
         this.labelAxes();
-        for (let func of this.funcs) {
-            func.draw();
+        if (this.drawFunctions) {
+            for (let func of this.funcs) {
+                func.draw();
+            }    
         }
         for (let pt of this.points) {
             pt.draw();
@@ -147,8 +152,29 @@ class Graph {
         }
     }
 
-    addInteractiveDrawing() {
-        // Draw the function one point at a time from values sent in by another script
+    addInteractiveDrawing(f=null, call=null, round=1) {
+        // Draw the function one point at a time
+        // basically identical to addInteractiveFunctionHeight, so should probably be refactored/remade
+        if (f) {
+            this.drawFunctions = false;
+            this.addFunction(f, null);
+        }
+        this.interact = new Interactive(this, 'function points', call, round);
+        // Assume graph will only have one interactive element at a time
+        let graph = this;
+        this.canvas.addEventListener("mousemove", function(event) {
+            moveHandler(graph, event);
+        })
+        this.canvas.addEventListener("mousedown", function(event) {
+            clickHandler(graph, event);
+        })
+        function moveHandler(graph, event) {
+            let pos = graph.translateMousePosition(event.offsetX, event.offsetY);
+            graph.interact.updatePosition(pos.x, pos.y);
+        }
+        function clickHandler(graph, event) {
+            graph.interact.addFunctionPoint(0);
+        }
     }
     
     addPoint(x, y, active=0, inactive=0) {
@@ -181,7 +207,9 @@ class Graph {
         } else {
             func = new Function(this, f, finv, this.getColor());
         }
-        func.draw();
+        if (this.drawFunctions) {
+            func.draw();
+        }
         this.funcs.push(func);
     }
 
@@ -525,7 +553,7 @@ class Line {
         this.graph = graph;
         this.label = label;
         
-        // Line parameters a/m, b
+        // Line a/m, b
         this.b = params.b;
         if (typeof params.m !== 'undefined') {
             this.m = params.m;
@@ -773,6 +801,8 @@ class Interactive {
             case 'function height':
                 this.draw = this.drawFunctionHeight;
                 break;
+            case 'function points':
+                this.draw = this.drawVertical;
         }
         this.x = 0;
         this.y = 0;
@@ -868,6 +898,31 @@ class Interactive {
 
         if (this.call) {
             this.call(xs, yss);
+        }
+    }
+
+    drawVertical() {
+        // Draw a vertical line at x
+        let ctx = this.graph.ctx;
+        ctx.setLineDash([10,10]);
+        ctx.strokeStyle = Graph.colors.black;
+        ctx.fillStyle = Graph.colors.black;
+        
+        let x = this.x;
+        let y0 = this.graph.ylim[0];
+        let y1 = this.graph.ylim[1];
+
+        this.graph.drawLinear(x, y0, x, y1, ['none', 'none']);
+
+        ctx.setLineDash([]);
+    }
+
+    addFunctionPoint(which) {
+        let x = this.x;
+        let y = graph.funcs[which].f(x);
+        graph.addPoint(x, y, -1);
+        if (this.call) {
+            this.call(x);
         }
     }
 }

@@ -1,19 +1,24 @@
 window.addEventListener("load", faf_draw_setup, true);
 
 let graph = null;
-let values = [];
 
 function faf_draw_setup() {
     let canvas = document.getElementById("faf_draw");
 
     graph = new Graph(canvas, [-5, 5], [-5,5]);
-
+    
     g = function(x) {return (Math.pow(x,3) - 9*x)/3;}
-
+    
     // graph.addFunction(g, null, {on: true, text:'y=g(x)', x:3.25});
     
     graph.addPoint(1, -8/3, -1, 0);
-    values.push(1);
+
+    graph.addInteractiveDrawing(g, call, 2);
+
+    function call(x) {
+        document.getElementById("fafd-input").value = x;
+        faf_calc(x);
+    }
 }
 
 function faf_draw_point(x,y) {
@@ -64,13 +69,8 @@ function faf_calc(value) {
     document.getElementById("fafd-line3").innerHTML = html;
 
     value = Graph.round(value, 3);
-    if (values.includes(value)){
-        
-    } else {
-        faf_draw_point(value, y);
-        values.push(value);
-    }
-
+    faf_draw_point(value, y);
+    
     html = '\\( (';
     html += value;
     html += ', ';
