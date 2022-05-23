@@ -27,7 +27,9 @@ e.g. a horizontally-oriented table:
 
 The headers here are t, d(t), and v(t) in the first column.
 
-To use html for any entry, use [] in place of <>
+To use html for any entry, use [] in place of <>, and | in place of /
+
+e.g. [span] text [|span]
 
 */
 
@@ -100,8 +102,9 @@ function tables() {
     }
 
     function check_entry(text) {
-        text = text.replace('[', '<');
-        text = text.replace(']', '>');
+        text = text.replace(/\[/g, '<');
+        text = text.replace(/\]/g, '>');
+        text = text.replace(/\|/g, '\/');
         return text;
     }
 }

@@ -60,8 +60,14 @@ class Graph {
         this.ctx = this.canvas.getContext("2d");
 
         // Set scaling for graph
-        this.xlim = xlim;
-        this.ylim = ylim;
+        function parseArray(array) {
+            for (let i = 0; i < array.length; i++) {
+                array[i] = parseFloat(array[i]);
+                return array;
+            }
+        }
+        this.xlim = parseArray(xlim);
+        this.ylim = parseArray(ylim);
         this.xscale = Graph.width / (xlim[1] - xlim[0]);
         this.yscale = -Graph.height / (ylim[1] - ylim[0]);
         this.scale = Math.sqrt(Math.pow(this.xscale,2) + Math.pow(this.yscale,2));
@@ -136,11 +142,7 @@ class Graph {
     addInteractiveFunctionHeight(call=null) {
         // Draw a line at the mouse from x-axis to function to y-axis
         // i represents which function to use
-        if (call) {
-            this.interact = new Interactive(this, 'function height', call);
-        } else {
-            this.interact = new Interactive(this, 'function height');
-        }
+        this.interact = new Interactive(this, 'function height', call);
         // Assume graph will only have one interactive element at a time
         let graph = this;
         this.canvas.addEventListener("mousemove", function(event) {
@@ -168,12 +170,18 @@ class Graph {
         this.canvas.addEventListener("mousedown", function(event) {
             clickHandler(graph, event);
         })
+        this.canvas.addEventListener("mouseout", function(event) {
+            leaveHandler(graph, event);
+        })
         function moveHandler(graph, event) {
             let pos = graph.translateMousePosition(event.offsetX, event.offsetY);
             graph.interact.updatePosition(pos.x, pos.y);
         }
         function clickHandler(graph, event) {
             graph.interact.addFunctionPoint(0);
+        }
+        function leaveHandler(graph, event) {
+            graph.interact.updatePosition(graph.xlim[1]*2, 0);
         }
     }
     
@@ -211,6 +219,35 @@ class Graph {
             func.draw();
         }
         this.funcs.push(func);
+    }
+
+    addPiecewise(xs=[0], fs=[(x)=>{return 0}, (x)=>{return 1}], fx=[0.5]) {
+        let func = new Piecewise(this, xs, fs, fx, this.getColor());
+        func.draw();
+        this.funcs.push(func);
+    }
+
+    addStaircase(w, h, h0, left=null, right=null) {
+        // Create a staircase function by using piecewise
+        let xs = [];
+        let fx = [];
+        let fs = [];
+        
+        if (left == null) {
+            left = Math.ceil((this.xlim[0]) / (w/h)) * (w/h);
+        }
+        if (right == null) {
+            right = Math.floor(this.xlim[1] / (w/h)) * (w/h);
+        }
+        
+        fs.push((y) => {return h*left/w + h0})
+        for (let x = left + w/h; x < right; x += w/h) {
+            xs.push(x);
+            fx.push(h*x/w + h0);
+            fs.push((y) => {return h*x/w + h0});
+        }
+        
+        this.addPiecewise(xs, fs, fx);
     }
 
     addParametric(x, y, t=[0,1], label=null) {
@@ -351,6 +388,11 @@ class Graph {
         ctx.lineTo(x2, y2);
         ctx.stroke();
 
+        x1 /= this.xscale;
+        x2 /= this.xscale;
+        y1 /= this.yscale;
+        y2 /= this.yscale;
+
         switch (endpoints[1]) {
             case 'arrowhead':
                 this.drawEnd(x2, y2, 'arrowhead', dx, dy);
@@ -383,14 +425,18 @@ class Graph {
 
         // Adjust the endpoints
         let d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy2, 2));
+        let x_left = x1;
+        let x_right = x2;
+        let y_left = y1;
+        let y_right = y2;
         if (endpoints[1] != 'none') {
-            x2 -= dx / d * (Graph.arrowSize / this.scale);
-            y2 -= dy2 / d * (Graph.arrowSize / this.scale);
+            x2 -= dx / d * (Graph.arrowSize / this.scale) / 2;
+            y2 -= dy2 / d * (Graph.arrowSize / this.scale) / 2;
         }
         d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy1, 2));
         if (endpoints[0] != 'none') {
-            x1 += dx / d * (Graph.arrowSize / this.scale);
-            y1 -= dy1 / d * (Graph.arrowSize / this.scale);
+            x1 += dx / d * (Graph.arrowSize / this.scale) / 2;
+            y1 -= dy1 / d * (Graph.arrowSize / this.scale) / 2;
         }
 
         let x = x1;
@@ -405,8 +451,19 @@ class Graph {
         // Draw the endpoints
         let dy = [dy1, dy2];
         dx = [-dx, dx];
-        x = [this.xscale*x1, this.xscale*x2];
-        let y = [this.yscale*y1, this.yscale*y2];
+        // Lines are shortened for arrowhead and open endpoints, not for closed
+        // But open endpoints need to be drawn at the correct centers
+        if (endpoints[0] != 'arrowhead') {
+            x1 = x_left;
+            y1 = y_left;
+        }
+        if (endpoints[1] != 'arrowhead') {
+            x2 = x_right;
+            y2 = y_right;
+        }
+
+        x = [x1, x2];
+        let y = [y1, y2];
         for (let k of [0,1]) {
             switch (endpoints[k]) {
                 case 'closed':
@@ -490,6 +547,9 @@ class Graph {
     drawArrowhead(x, y, dx, dy) {
         // d for denominator (or distance)
         let d = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+
+        x *= this.xscale;
+        y *= this.yscale;
 
         // Don't need the actual angle, just sin/cos
         let cos_theta = dx / d;
@@ -695,6 +755,66 @@ class Function {
     }
 }
 
+class Piecewise {
+    /*
+        Piecewise functions. Takes arguments:
+            xs  endpoints of intervals (n)
+            fs  functions between endpoints, starting with left of first (n+1)
+            fx  function values of endpoints (n)
+    */
+    
+    constructor(graph, xs=[0], fs=[(x)=>{return 0}, (x)=>{return 1}], fx=[0.5], color="#000") {
+        this.graph = graph;
+        this.xs = xs;
+        this.fs = fs;
+        this.fx = fx;
+        this.color = color;
+    }
+
+    f(a) {
+        // Return the function value by checking input a against endpoints
+        for (let i = 0; i < this.xs.length; i++) {
+            if (a < this.xs[i]) {
+                return this.fs[i](a);
+            } else if (a == this.xs[i]) {
+                return this.fx[i];
+            }
+        }
+        // Right of the right-most endpoint
+        return this.fs[this.xs.length](a);
+    }
+
+    draw() {
+        // Draw the function, one interval at a time
+        this.graph.ctx.strokeStyle = this.color;
+        this.graph.ctx.fillStyle = this.color;
+
+        let steps = 256 / this.xs.length;
+
+        // Left-most interval first, from xlim[0] to x0
+        let left = this.graph.xlim[0];
+        let right = this.xs[0];
+        this.graph.drawFunction(this.fs[0], left, right, steps, ['arrowhead', 'open']);
+
+        // Middle intervals, from x0 to xf
+        for (let i = 0; i < this.xs.length-1; i++) {
+            left = this.xs[i];
+            right = this.xs[i+1];
+            this.graph.drawFunction(this.fs[i+1], left, right, steps,['open', 'open']);
+        }
+
+        // Right-most interval, from xf to xlim[-1]
+        left = this.xs[this.xs.length-1];
+        right = this.graph.xlim[1];
+        this.graph.drawFunction(this.fs[this.fs.length-1], left, right, steps, ['open', 'arrowhead']);
+
+        // Draw the closed endpopints
+        for (let i = 0; i < this.xs.length; i++) {
+            this.graph.drawPoint(this.xs[i], this.fx[i]);
+        }
+    }
+}
+
 class Parametric {
     constructor(graph, x, y, t=[0,1], color="#000", endpoints=['closed', 'closed']) {
         // Store the graph we're drawing on. Endpoints can be 'closed', 'open', or 'arrowhead'.
@@ -748,7 +868,6 @@ class Parametric {
                 while (iter++ < Graph.calc.runs) {
                     mid = (left + right) / 2;
                     fmid = this.x(mid) - a;
-                    // console.log('left', left, 'mid', mid, 'right', right); // For debugging
                     if ((Math.abs(fmid)) < epsilon || (right-left) < epsilon) {
                         // Solution found
                         roots.push(mid);

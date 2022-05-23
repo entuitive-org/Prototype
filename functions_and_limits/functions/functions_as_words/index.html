@@ -18,7 +18,10 @@
         <!-- 
             Scripts
          -->
+         <script src="../../../scripts/tables.js"></script>
+         <script src="../../../scripts/graph.js"></script>
          <script src="faw1.js"></script>
+         <script src="widgets.js"></script>
 
     </head>
 
@@ -62,9 +65,9 @@
                     
                 </div>
 
-                <div class="example-fixed">
+                <!-- <div class="example-fixed">
                     
-                </div>
+                </div> -->
 
                 
                 <div class="example">
@@ -111,6 +114,56 @@
                  -->
 
 
+                <div class="exposition">
+                    It is almost always helpful to translate words into some other representation.
+                </div>
+
+                <div class="example">
+                    <p>
+                        A widget-making machine makes 
+                        <input maxlength="4" value="3" autocomplete="off" oninput="update_widgets(value);">
+                        widgets every
+                        <input maxlength="4" value="2" autocomplete="off" oninput="update_hours(value);">
+                        hours. How many widgets has it made after
+                        <input maxlength="4" value="5" autocomplete="off" oninput="update_elapsed(value);">
+                        hours?
+                    </p>
+
+                    <div class="grid-split">
+                        <div class="grid-left">
+                            <div class="table">
+                                vertical//
+                                Hours / Widgets //
+                                [input maxlength="4" class="table_in" value="0" oninput="table_update();"] / [span class="table_out"] 0 [|span] //
+                                [input maxlength="4" class="table_in" value="1" oninput="table_update();"] / [span class="table_out"] 1 [|span] //
+                                [input maxlength="4" class="table_in" value="2" oninput="table_update();"] / [span class="table_out"] 3 [|span] //
+                                [input maxlength="4" class="table_in" value="3" oninput="table_update();"] / [span class="table_out"] 4 [|span] //
+                                [input maxlength="4" class="table_in" value="4" oninput="table_update();"] / [span class="table_out"] 6 [|span] //
+                            </div>
+                        </div>
+                        <div class="grid-right">
+                            <canvas class="graph" id="widgets-graph">
+                                It's a canvas
+                            </canvas>
+                        </div>
+                    </div>
+
+                    <p>
+                        After
+                        <span id="widget_after">
+                            \( 
+                                5
+                            \)
+                        </span>
+                        hours, the machine has made
+                        <span id="widget_output">
+                            \(
+                                7
+                            \)
+                        </span>
+                        widgets.
+                    </p>
+                </div>
 
                 <!-- Next bar is also filled by maps.js -->
                 <div id="next">
