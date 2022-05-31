@@ -43,7 +43,8 @@ function table_update() {
     outputs = document.getElementsByClassName("table_out");
 
     for (let i = 0; i < inputs.length; i++) {
-        outputs[i].innerHTML = Math.floor(widgets / hours * parseFloat(inputs[i].value));
+        if (parseFloat(inputs[i].value) != parseFloat(inputs[i].value)) continue;
+        outputs[i].innerHTML = Math.max(Math.floor(widgets / hours * parseFloat(inputs[i].value)), 0);
     }
 }
 
@@ -55,7 +56,7 @@ function update_outputs() {
     aft.innerHTML = html;
     
     html = '\\(';
-    html += Math.floor(widgets / hours * elapsed);
+    html += Math.max(Math.floor(widgets / hours * elapsed), 0);
     html += '\\)';
 
     let out = document.getElementById('widget_output');
@@ -66,18 +67,27 @@ function update_outputs() {
 }
 
 function update_widgets(value) {
+    value = parseFloat(value);
+    if (value != value) return;
+    if (value < 1) return;
     widgets = value;
     reset_graph();
     table_update();
 }
 
 function update_hours(value) {
+    value = parseFloat(value);
+    if (value != value) return;
+    if (value < 1) return;
     hours = value;
     reset_graph();
     table_update();
 }
 
 function update_elapsed(value) {
+    value = parseFloat(value);
+    if (value != value) return;
+    if (value < 1) return;
     elapsed = value;
     reset_graph();
     table_update();

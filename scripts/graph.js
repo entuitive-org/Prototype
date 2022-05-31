@@ -233,6 +233,9 @@ class Graph {
         let fx = [];
         let fs = [];
         
+        if (left < this.xlim[0]) return;
+        if (right > this.xlim[1]) return;
+
         if (left == null) {
             left = Math.ceil((this.xlim[0]) / (w/h)) * (w/h);
         }
