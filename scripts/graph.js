@@ -228,23 +228,40 @@ class Graph {
     }
 
     addStaircase(w, h, h0, left=null, right=null) {
-        // Create a staircase function by using piecewise
-        let xs = [];
-        let fx = [];
-        let fs = [];
-        
-        if (left < this.xlim[0]) return;
-        if (right > this.xlim[1]) return;
+        /* 
+        Create a staircase function by using piecewise over n intervals
 
+        w       width of each step
+        h       height of each step
+        h0      height at 0
+        left    no steps drawn left of this value
+        right   no steps drawn right of this value
+        */
+
+        // If h is 0, add a line at height h0 and quit
+        if (h == 0) {
+            this.addLine({m: 0, b: h0});
+            return;
+        }
+
+        let xs = [];    // Endpoints of intervals, n-1
+        let fx = [];    // Function values of endpoints, n-1
+        let fs = [];    // Functions between/outside endpoints. n
+        
+        // If left and right limits are not given, set them to the farthest step in that direction
         if (left == null) {
-            left = Math.ceil((this.xlim[0]) / (w/h)) * (w/h);
+            left = Math.ceil((this.xlim[0]) * (h/w)) * (w/h);
         }
         if (right == null) {
-            right = Math.floor(this.xlim[1] / (w/h)) * (w/h);
+            right = Math.floor(this.xlim[1] * (h/w)) * (w/h);
         }
-        
+
         fs.push((y) => {return h*left/w + h0})
-        for (let x = left + w/h; x < right; x += w/h) {
+
+        let i = 0;
+        let step = Math.abs(w/h);
+        for (let x = left + step; x < right; x += step) {
+            if (i++ > 10) break;
             xs.push(x);
             fx.push(h*x/w + h0);
             fs.push((y) => {return h*x/w + h0});

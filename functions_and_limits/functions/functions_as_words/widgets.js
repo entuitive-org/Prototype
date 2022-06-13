@@ -20,6 +20,7 @@ function widget_setup() {
 }
 
 function reset_graph() {
+    elapsed = parseFloat(document.getElementById("elapsed").value);
     let right = Math.ceil(elapsed) + 1;
     let upper = Math.ceil(right * widgets / hours) + 1;
 
@@ -69,7 +70,8 @@ function update_outputs() {
 function update_widgets(value) {
     value = parseFloat(value);
     if (value != value) return;
-    if (value < 1) return;
+    console.log(value);
+    // if (value < 1) return;
     widgets = value;
     reset_graph();
     table_update();
@@ -78,7 +80,7 @@ function update_widgets(value) {
 function update_hours(value) {
     value = parseFloat(value);
     if (value != value) return;
-    if (value < 1) return;
+    // if (value < 1) return;
     hours = value;
     reset_graph();
     table_update();
@@ -87,8 +89,8 @@ function update_hours(value) {
 function update_elapsed(value) {
     value = parseFloat(value);
     if (value != value) return;
-    if (value < 1) return;
+    // if (value < 1) return;
     elapsed = value;
-    reset_graph();
-    table_update();
+    // reset_graph();
+    // table_update();
 }
