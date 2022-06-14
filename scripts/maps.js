@@ -211,7 +211,8 @@ function maps() {
         var outer = 0;
         var inner = 0;
         var map = [];
-        for (line in lines) {
+        for (let _line in lines) {
+            if (lines[outer][0] == "#") continue
             if (lines[outer][0] == "-") {
                 if (inner == 0){
                     index += 1;

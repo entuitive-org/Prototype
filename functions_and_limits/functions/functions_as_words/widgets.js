@@ -33,7 +33,7 @@ function reset_graph() {
         }
     }
 
-    graph.addStaircase(hours, widgets, 0, 0, right-0.5);
+    graph.addStaircase(hours, widgets, 0, 0, right);
     graph.addInteractiveFunctionHeight(call);
 
     update_outputs();
@@ -70,8 +70,6 @@ function update_outputs() {
 function update_widgets(value) {
     value = parseFloat(value);
     if (value != value) return;
-    console.log(value);
-    // if (value < 1) return;
     widgets = value;
     reset_graph();
     table_update();
@@ -80,7 +78,6 @@ function update_widgets(value) {
 function update_hours(value) {
     value = parseFloat(value);
     if (value != value) return;
-    // if (value < 1) return;
     hours = value;
     reset_graph();
     table_update();
@@ -89,8 +86,7 @@ function update_hours(value) {
 function update_elapsed(value) {
     value = parseFloat(value);
     if (value != value) return;
-    // if (value < 1) return;
     elapsed = value;
-    // reset_graph();
-    // table_update();
+    reset_graph();
+    table_update();
 }

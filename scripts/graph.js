@@ -258,10 +258,8 @@ class Graph {
 
         fs.push((y) => {return h*left/w + h0})
 
-        let i = 0;
         let step = Math.abs(w/h);
         for (let x = left + step; x < right; x += step) {
-            if (i++ > 10) break;
             xs.push(x);
             fx.push(h*x/w + h0);
             fs.push((y) => {return h*x/w + h0});
