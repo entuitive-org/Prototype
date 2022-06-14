@@ -1,0 +1,3 @@
+Explain the domain is projection onto x-axis, range is projection onto y-axis.
+
+Interactive graph with nodes. Add or remove nodes, segments, using mouse. Project onto the x and y axes, and have a paragraph describing the domain and range.

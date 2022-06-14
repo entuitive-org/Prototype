@@ -20,10 +20,18 @@ and this script will populate them automatically
 
 window.addEventListener("load", maps, true);
 
+// Clean strings, things like whitespace and & symbols cause errors
+function clean(string) {
+    string = string.trim();
+    string = string.replace('&amp;', '&');
+    return string
+}
+
 function maps() {
 
     var current = document.getElementById("title").innerHTML;
-    current = current.trim();
+    current = clean(current);
+    
     var chapter = '';
     var section = '';
     
@@ -104,7 +112,7 @@ function maps() {
             html += '<li>';
             switch (typeof(map[line])) {
                 case 'string':
-                    section = map[line].trim();;
+                    section = map[line].trim();
                     if (map[line].trim() == current) {
                         chapter = section;
                         next = '#'; // Trigger for setting actual next

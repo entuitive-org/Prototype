@@ -1,0 +1,3 @@
+Reference natural domain and real numbers. Use functions like sqrt.
+
+What about the interactive part? Maybe allow users to enter a function of x, or build one from pieces. Examples could include sqrt(f(x)), 1/f(x), ...?

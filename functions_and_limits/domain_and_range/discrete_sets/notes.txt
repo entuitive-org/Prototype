@@ -1,0 +1,3 @@
+Start with the example of "how old are you", where user enters a DOB and it outputs their age in years.
+
+Use this to explain discrete sets and notation.

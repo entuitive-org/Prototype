@@ -1,0 +1,3 @@
+Introduce the "natural domain" and give a few visual examples of domain and range.
+
+Interactive: table with mutable entries and a paragraph listing the domain and range.

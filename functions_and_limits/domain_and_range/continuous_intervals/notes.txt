@@ -1,0 +1,3 @@
+Use a number line to explain interval notation, with unions and intersections.
+
+For the interactive part, need to create something like graph.js but specific to number lines. With that, we can create a single interval, followed by unions and intersections of intervals.
