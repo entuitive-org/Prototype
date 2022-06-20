@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="../../../scripts/style.css">
 
         <script src="../../../scripts/maps.js"></script>
+        <script src="../../../scripts/tables.js"></script>
+
+        <script src="domain_table.js"></script>
 
         <!-- <script src="../../../scripts/graph.js"></script> -->
         
@@ -51,21 +54,38 @@
 
                 <div class="exposition">
                     <p>
-                        Domain and range
+                        The <em>domain</em> refers to the possible inputs for a function.
+                        The <em>range</em> refers to the possible outputs of a function, from those inputs.
                     </p>
-                    
-                </div>
-
-                <!-- <div class="example-fixed">
-                    
-                </div> -->
-
-                
-                <div class="example">
                     <p>
-                        Interactive example
+                        If the domain is not specified in the function's definition, we usually assume it to be any real number that gives a real number as an output.
+                        This is known as the <em>natural domain</em>.
                     </p>
                     
+                <div class="example">
+                    <div class="grid-split">
+                        <div class="grid-left">
+                            <div class="table">
+                                vertical//
+                                t/ h(t)//
+                                [input value="1" maxlength="3" autocomplete=off class="in" oninput="table_update(); MathJax.typeset()"] / [input value="2" maxlength="3" autocomplete=off class="out" oninput="table_update(); MathJax.typeset()"]//
+                                [input value="2" maxlength="3" autocomplete=off class="in" oninput="table_update(); MathJax.typeset()"] / [input value="3" maxlength="3" autocomplete=off class="out" oninput="table_update(); MathJax.typeset()"]//
+                                [input value="3" maxlength="3" autocomplete=off class="in" oninput="table_update(); MathJax.typeset()"] / [input value="4" maxlength="3" autocomplete=off class="out" oninput="table_update(); MathJax.typeset()"]//
+                                [input value="4" maxlength="3" autocomplete=off class="in" oninput="table_update(); MathJax.typeset()"] / [input value="5" maxlength="3" autocomplete=off class="out" oninput="table_update(); MathJax.typeset()"]//
+                            </div>
+                        </div>
+                        <div class="grid-right">
+                            <p id="domain">
+                                The domain of this function is \( \lbrace 1, 2, 3, 4 \rbrace \)
+                            </p>
+                            <p id="range">
+                                The range of this function is \( \lbrace 2, 3, 4, 5 \rbrace \)
+                            </p>
+                            <p id="function">
+                                This table does not represent a function.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
 
