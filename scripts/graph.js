@@ -56,10 +56,11 @@ class Graph {
     }
 
     constructor(canvas, xlim=[-10,10], ylim=[-10,10], independent='x', dependent='y') {
+        // Get canvas and context
         this.canvas = canvas;
         this.ctx = this.canvas.getContext("2d");
 
-        // Set scaling for graph
+        // Force limits to be read as float
         function parseArray(array) {
             for (let i = 0; i < array.length; i++) {
                 array[i] = parseFloat(array[i]);
@@ -68,21 +69,27 @@ class Graph {
         }
         this.xlim = parseArray(xlim);
         this.ylim = parseArray(ylim);
+        // Set scaling of graph
         this.xscale = Graph.width / (xlim[1] - xlim[0]);
         this.yscale = -Graph.height / (ylim[1] - ylim[0]);
         this.scale = Math.sqrt(Math.pow(this.xscale,2) + Math.pow(this.yscale,2));
 
+        // Set variable names
         this.xvar = independent;
         this.yvar = dependent;
 
+        // Set canvas size to 1024x1024
         this.canvas.width = Graph.width;
         this.canvas.height = Graph.height;
 
+        // Center the graph
         this.ctx.translate(-xlim[0] * this.xscale, -ylim[1] * this.yscale);
 
+        // Draw and label axes
         this.drawAxes();
         this.labelAxes();
 
+        // Initialize empty arrays for interactive elements
         this.funcs = [];
         this.points = [];
         this.interact = null;

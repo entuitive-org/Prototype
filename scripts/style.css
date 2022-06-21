@@ -252,6 +252,17 @@ th, td {
     margin: 32px auto 0;
 }
 
+.numberline {
+    display: block;
+    width: 256px;
+    height: 64px;
+    margin: 0 auto;
+}
+
+.numberline:hover {
+    cursor: crosshair;
+}
+
 /* 
     Equations: split between left and right, left aligned right and vice-versa
 */
