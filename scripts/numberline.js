@@ -73,6 +73,28 @@ class Numberline {
         // Placeholders for intervals and points
         this.points = [];
         this.intervals = [];
+        this.interact = null;
+
+        // Subscription
+        this.observers = [];
+        let numberline = this;
+        for (let type of ['mousedown', 'mouseup', 'click', 'dblclick', 'mousemove', 'mouseover']) {
+            this.canvas.addEventListener(type, (event) => {
+                numberline.broadcast(event);
+            })
+        }
+    }
+
+    subscribe(obj) {
+        this.observers.push(obj);
+    }
+
+    unsubscribe(obj) {
+        this.observers = this.observers.filter((subscriber) => subscriber !== obj);
+    }
+
+    broadcast(data) {
+        this.observers.forEach((subscriber) => subscriber.handleEvent(data));
     }
 
     drawAxes() {
@@ -161,6 +183,11 @@ class Numberline {
         }
     }
 
+    addInteractive(initial) {
+        let interact = new Interactive(this, initial);
+        this.interact = interact;
+    }
+
     drawPoint(x, closed=true) {
         let ctx = this.ctx;
         ctx.beginPath();
@@ -212,4 +239,96 @@ class Point {
         this.numberline.ctx.fillStyle = this.color;
         this.numberline.drawPoint(this.x);
     }
+}
+
+class Interactive {
+    /*
+        This section is not finished and never will be. Next iteration will use D3 instead.
+    */
+    static clickRadiusSquared = 1/16;
+
+    constructor(numberline, initial) {
+        this.type = 'Interactive';
+        this.numberline = numberline;
+        this.points = [];
+        this.intervals = [];
+        this.addSet(initial);
+        this.numberline.subscribe(this);
+
+        this.circleID = null;
+    }
+
+    addSet(set) {
+        for (let element of set) {
+            switch (typeof(element)) {
+                case 'number':
+                    this.addPoint(element);
+                    break;
+                // add interval (object) case later
+            }
+        }
+    }
+
+    addPoint(x) {
+        let point = new Point(this.numberline, x, Numberline.colors.complement);
+        point.draw();
+        this.points.push(point);
+    }
+
+    handleEvent(event) {
+        switch (event.type) {
+            case 'mousedown':
+                console.log(this);
+                break;
+            case 'mouseup':
+                // console.log('mouse up');
+                break;
+            case 'mousemove':
+                this.mouseHover(event);
+                break;
+            case 'mouseover':
+                this.mouseHover(event);
+                break;
+        }
+    }
+
+    mouseHover(event) {
+        let x = event.offsetX;
+        let y = event.offsetY;
+
+        [x,y] = this.translateToGraph(x, y);
+        let point = this.checkPoint(x, y);
+        if (point) {
+            console.log(point.x);
+            this.circleID = setInterval(this.circleIndicator, 10);
+        } else {
+
+        }
+    }
+
+    circleIndicator() {
+        
+    }
+
+    checkPoint(x, y) {
+        for (let point of this.points) {
+            if (this.squareDistance(x, y, point.x, 0) <= Interactive.clickRadiusSquared) {
+                return point;
+            }
+            // Change this to deal with multiple points and return the closest
+        }
+    }
+
+    translateToGraph(x, y) {
+        x = (x / Numberline.canvasWidth)
+            * (this.numberline.lim[1] - this.numberline.lim[0]) 
+            + this.numberline.lim[0];
+        y = (y / Numberline.canvasHeight) - (1/2);
+        return [x, y];
+    }
+
+    squareDistance(x1, y1, x2, y2) {
+        return Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2);
+    }
+    
 }
